@@ -6,6 +6,7 @@ var gisArr = [];
 var lionArr = [];
 var lion2Arr = [];
 var vorArr = [];
+
 function genetareMatrix(lengthY, lengthX, number) {
 
     let matrix = [];
@@ -60,7 +61,38 @@ function setup() {
 }
 
 
-function draw() {
+function drawMatrix(matrix) {
+    function setup() {
+        frameRate(5);
+        createCanvas(matrix[0].length * side, matrix.length * side); 
+        background('#acacac');
+    
+        
+        for (var y = 0; y < matrix.length; y++) {
+            for (var x = 0; x < matrix[y].length; x++) {
+                if (matrix[y][x] == 2) {
+                    var eatgrass = new Eatgrass(x, y);
+                    eatArr.push(eatgrass);
+                } else if (matrix[y][x] == 1) {
+                    var grass = new Grass(x, y);
+                    grassArr.push(grass);
+                }
+                else if (matrix[y][x] == 3) {
+                    var gis = new Gishatich(x, y);
+                    gisArr.push(gis);
+                }
+                else if (matrix[y][x] == 4) {
+                    var lArr = new Lion(x, y);
+                    lionArr.push(lArr);
+                }
+                else if (matrix[y][x] == 5) {
+                    var  vorsord= new Vorsord(x, y);
+                    vorArr.push(vorsord);
+                }
+               
+            }
+        }
+    }
     
     background('#acacac');
     for (var i = 0; i < matrix.length; i++) {
@@ -91,23 +123,7 @@ function draw() {
     }
 
 
-    
-    for (var u in grassArr) {
-        grassArr[u].mul();
-    }
-
-   
-    for (var u in eatArr) {
-        eatArr[u].eat();
-    }for (var u in gisArr) {
-        gisArr[u].eat();
-    }
-    for (var u in lionArr) {
-        lionArr[u].eat();
-    }
-    for (var u in vorArr) {
-        vorArr[u].eat();
-    }
-  
+    //aystegh on funci mijocov lusum enq serverin
+    socket.on("display matrix", drawMatrix);
   
 }
